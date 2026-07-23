@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formaê × H7 — Painel de Contratos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D1B2A;
+    --navy-2:#152B41;
+    --navy-3:#1E3A54;
+    --orange:#FF663D;
+    --orange-dark:#C94B29;
+    --off-white:#F5F2E3;
+    --paper:#FBFAF4;
+    --slate:#8FA0B3;
+    --line: rgba(245,242,227,0.14);
+    --line-strong: rgba(245,242,227,0.28);
+    --good:#5FAE7A;
+    --warn:#E7B84B;
+    --font-display:'Montserrat', sans-serif;
+    --font-body:'PT Serif', Georgia, serif;
+  }
+  *,*::before,*::after{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy);
+    color:var(--off-white);
+    font-family:var(--font-body);
+    line-height:1.6;
+    padding-bottom:4rem;
+  }
+
+  /* film sprocket strip */
+  .sprocket-strip{
+    display:flex;
+    gap:10px;
+    padding:8px 3rem;
+    background:#070E16;
+    overflow:hidden;
+  }
+  .sprocket-strip span{
+    width:9px; height:9px;
+    border-radius:2px;
+    background:rgba(245,242,227,0.18);
+    flex-shrink:0;
+  }
+
+  header{
+    background:var(--navy);
+    padding:2.5rem 3rem 2rem;
+    border-bottom:1px solid var(--line-strong);
+  }
+  .brand-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:1rem;
+  }
+  .wordmark{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:2.1rem;
+    letter-spacing:-0.02em;
+    color:var(--off-white);
+  }
+  .wordmark .x{
+    color:var(--orange);
+    font-weight:400;
+    margin:0 0.4rem;
+  }
+  .subtitle{
+    font-family:var(--font-display);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin-top:0.5rem;
+  }
+  .updated{
+    font-family:var(--font-display);
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--slate);
+    text-align:right;
+  }
+  .updated strong{color:var(--off-white); display:block; font-size:0.85rem; letter-spacing:0.02em; margin-top:2px;}
+
+  nav.tabs{
+    display:flex;
+    gap:0;
+    max-width:1180px;
+    margin:1.75rem auto 0;
+    padding:0 3rem;
+    border-bottom:1px solid var(--line);
+  }
+  nav.tabs button{
+    font-family:var(--font-display);
+    font-size:0.78rem;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    background:none;
+    border:none;
+    color:var(--slate);
+    padding:0.9rem 1.4rem;
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    transition:color 0.15s, border-color 0.15s;
+  }
+  nav.tabs button:hover{color:var(--off-white);}
+  nav.tabs button.active{color:var(--orange); border-bottom-color:var(--orange);}
+
+  main{
+    max-width:1180px;
+    margin:0 auto;
+    padding:2.5rem 3rem;
+  }
+  section{display:none;}
+  section.active{display:block;}
+
+  .kpi-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-bottom:2.5rem;
+  }
+  .kpi{
+    background:var(--navy);
+    padding:1.3rem 1.5rem;
+  }
+  .kpi .label{
+    font-family:var(--font-display);
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin-bottom:0.5rem;
+  }
+  .kpi .value{
+    font-family:var(--font-display);
+    font-size:1.6rem;
+    font-weight:700;
+    color:var(--off-white);
+  }
+  .kpi .value.orange{color:var(--orange);}
+
+  h2.section-title{
+    font-family:var(--font-display);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin-bottom:1.2rem;
+    padding-bottom:0.6rem;
+    border-bottom:1px solid var(--line);
+  }
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(320px,1fr));
+    gap:1.5rem;
+  }
+
+  /* viewfinder card */
+  .frame{
+    position:relative;
+    background:var(--navy-2);
+    padding:1.6rem 1.7rem;
+    border:1px solid var(--line);
+  }
+  .corner{
+    position:absolute;
+    width:16px; height:16px;
+    border-color:var(--orange);
+    border-style:solid;
+    border-width:0;
+  }
+  .corner.tl{top:-1px; left:-1px; border-top-width:2px; border-left-width:2px;}
+  .corner.tr{top:-1px; right:-1px; border-top-width:2px; border-right-width:2px;}
+  .corner.bl{bottom:-1px; left:-1px; border-bottom-width:2px; border-left-width:2px;}
+  .corner.br{bottom:-1px; right:-1px; border-bottom-width:2px; border-right-width:2px;}
+
+  .frame .turma-name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:0.92rem;
+    color:var(--off-white);
+    letter-spacing:0.01em;
+    margin-bottom:1.1rem;
+    padding-right:1rem;
+    line-height:1.35;
+  }
+  .stat-pair{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:1rem;
+  }
+  .stat-pair .big{
+    font-family:var(--font-display);
+    font-size:2.2rem;
+    font-weight:800;
+    color:var(--off-white);
+    line-height:1;
+  }
+  .stat-pair .big-label{
+    font-family:var(--font-display);
+    font-size:0.65rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--slate);
+    margin-top:0.3rem;
+  }
+  .stat-pair .pacote{
+    text-align:right;
+    font-family:var(--font-display);
+    font-size:0.95rem;
+    font-weight:600;
+    color:var(--slate);
+  }
+  .stat-pair .pacote span{
+    display:block;
+    font-size:0.62rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--slate);
+    opacity:0.75;
+    font-weight:500;
+    margin-bottom:2px;
+  }
+
+  .split-bar{
+    height:26px;
+    display:flex;
+    width:100%;
+    border:1px solid var(--line-strong);
+    margin:0.9rem 0 0.6rem;
+    overflow:hidden;
+  }
+  .split-bar .seg-h7{background:var(--orange);}
+  .split-bar .seg-hub{background:var(--navy-3);}
+  .split-legend{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--font-display);
+    font-size:0.72rem;
+  }
+  .split-legend .lg{display:flex; align-items:center; gap:6px; color:var(--slate);}
+  .split-legend .lg .sw{width:9px;height:9px;flex-shrink:0;}
+  .split-legend .lg.h7 .sw{background:var(--orange);}
+  .split-legend .lg.hub .sw{background:var(--navy-3);}
+  .split-legend .lg strong{color:var(--off-white); font-weight:600;}
+
+  .contract-total{
+    margin-top:1rem;
+    padding-top:0.9rem;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+  }
+  .contract-total .label{
+    font-family:var(--font-display);
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--slate);
+  }
+  .contract-total .val{
+    font-family:var(--font-display);
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--off-white);
+  }
+
+  /* progress view */
+  .progress-card{
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    padding:1.5rem 1.7rem;
+    margin-bottom:1.2rem;
+  }
+  .progress-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:0.9rem;
+    flex-wrap:wrap;
+    gap:0.4rem;
+  }
+  .progress-head .name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:0.92rem;
+    color:var(--off-white);
+  }
+  .progress-head .pct{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.1rem;
+    color:var(--orange);
+  }
+  .track{
+    height:10px;
+    background:var(--navy);
+    border:1px solid var(--line-strong);
+    overflow:hidden;
+    margin-bottom:0.8rem;
+  }
+  .fill{
+    height:100%;
+    background:var(--orange);
+  }
+  .progress-figures{
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--font-display);
+    font-size:0.76rem;
+    color:var(--slate);
+  }
+  .progress-figures strong{color:var(--off-white); font-weight:600;}
+  .no-data-tag{
+    display:inline-block;
+    font-family:var(--font-display);
+    font-size:0.62rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--warn);
+    border:1px solid var(--warn);
+    padding:2px 7px;
+    margin-top:0.6rem;
+  }
+
+  /* formandos ativos view */
+  .formandos-card{
+    background:var(--navy-2);
+    border:1px solid var(--line);
+    margin-bottom:1.2rem;
+  }
+  .formandos-summary{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1.3rem 1.7rem;
+    cursor:pointer;
+    list-style:none;
+  }
+  .formandos-summary::-webkit-details-marker{display:none;}
+  .formandos-summary .name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:0.92rem;
+    color:var(--off-white);
+  }
+  .formandos-summary .counts{
+    display:flex;
+    gap:1.6rem;
+    align-items:center;
+  }
+  .count-block{text-align:right;}
+  .count-block .n{font-family:var(--font-display); font-weight:800; font-size:1.3rem; color:var(--off-white);}
+  .count-block .n.excl{color:var(--warn);}
+  .count-block .l{font-family:var(--font-display); font-size:0.6rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--slate);}
+  .chev{
+    font-family:var(--font-display);
+    color:var(--orange);
+    font-size:0.75rem;
+    transition:transform 0.15s;
+  }
+  details[open] .chev{transform:rotate(90deg);}
+  .names-list{
+    padding:0 1.7rem 1.4rem;
+    border-top:1px solid var(--line);
+    padding-top:1rem;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+    gap:0.4rem 1rem;
+  }
+  .names-list div{
+    font-family:var(--font-body);
+    font-size:0.85rem;
+    color:var(--off-white);
+    padding:2px 0;
+  }
+  .names-list div::before{
+    content:"— ";
+    color:var(--orange);
+  }
+
+  .footnote{
+    margin-top:2.5rem;
+    padding-top:1.2rem;
+    border-top:1px solid var(--line);
+    font-family:var(--font-display);
+    font-size:0.7rem;
+    letter-spacing:0.03em;
+    color:var(--slate);
+    line-height:1.7;
+  }
+
+  @media (max-width:640px){
+    header{padding:2rem 1.2rem 1.5rem;}
+    nav.tabs{padding:0 1.2rem;}
+    main{padding:2rem 1.2rem;}
+    .brand-row{flex-direction:column; align-items:flex-start;}
+    .updated{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sprocket-strip" id="strip-top"></div>
+
+<header>
+  <div class="brand-row">
+    <div>
+      <div class="wordmark">FORMAÊ<span class="x">×</span>H7</div>
+      <div class="subtitle">Painel de acompanhamento — pacotes de fotografia de formatura</div>
+    </div>
+    <div class="updated">Atualizado em<strong id="updated-date"></strong></div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="active" data-tab="tab1">Contratos ativos</button>
+  <button data-tab="tab2">Contratado vs pago</button>
+  <button data-tab="tab3">Formandos ativos</button>
+</nav>
+
+<main>
+
+  <section id="tab1" class="active">
+    <div class="kpi-row" id="kpi-row"></div>
+    <h2 class="section-title">Turmas com contrato H7 ativo</h2>
+    <div class="card-grid" id="cards-contratos"></div>
+  </section>
+
+  <section id="tab2">
+    <h2 class="section-title">Valor contratado vs valor já pago à H7</h2>
+    <div id="cards-progresso"></div>
+  </section>
+
+  <section id="tab3">
+    <h2 class="section-title">Formandos ativos por turma — clique para ver os nomes</h2>
+    <div id="cards-formandos"></div>
+  </section>
+
+  <div class="footnote">
+    Formandos com inadimplência acima de 70% são desconsiderados da contagem de ativos.<br>
+    A remuneração da Hub corresponde a 10% do valor contratado; o valor líquido repassado à H7 é de 90%.
+  </div>
+
+</main>
+
+<div class="sprocket-strip" id="strip-bottom"></div>
+
+<script>
+const DATA = {
+  turmas: [
+    {
+      nome: "FORMAÊ- 2027.1 - COMUNICAÇÃO UFMG JULIA",
+      pacote: 1150.00,
+      ativos: 23,
+      excluidos: 0,
+      pago: 8625.00,
+      parcelas: "3 de 8 parcelas pagas",
+      nomes: ["ALESSANDRA FARIAS LIMA","ALEXIA CRISTINA DOS SANTOS SILVA","ANA PAULA MOTA LUIZ","ANTONELLA GIOVANETTI NOVAK MAIORANA","ANTÔNIO MANOEL NEVES ABREU","BRUNA SANTOS ALVIM","CAIO LUIZ DOMINGOS","CAROLINA DA SILVA SETE","EDUARDA MARA DA SILVA SANTOS","FELIPE LUÍS SANTOS MOTA","ISABELLA RODRIGUES DO CARMO","JONAS AMARAL CARNEIRO TEIXEIRA","JULIA MOREIRA TRAVAIOLI DE OLIVEIRA","LUCCA FELIPE BOZZI","LUDMYLA BENEVENUTO OLIVEIRA","MARIA CLARA AMORIM FARIA","MARIA EDUARDA DIAS DA SILVA","MARIANA MOREIRA BRAZ","NAYARA CRISTINE CALAZANS ROCHA","NICOLI FERNANDES ALVES DE SOUSA","OLIVIA BABETTO GONÇALVES","REBECCA REIS","VITÓRIA AMARAL PRADO OLIVEIRA DE CASTRO"]
+    },
+    {
+      nome: "FORMAÊ- 2028.2 - ENFERMAGEM CIÊNCIAS MÉDICAS ISABELLA",
+      pacote: 1740.00,
+      ativos: 26,
+      excluidos: 0,
+      pago: 8482.50,
+      parcelas: "3 de 16 parcelas pagas",
+      nomes: ["ALINE GOES SANTOS","AMANDA ALVES SANTOS","ANDRESSA SOUSA GARCIA SOARES","CAMILA GONÇALVES VENUTO","CAMILA INÁCIO DE OLIVEIRA","CIBELE NATANY SILVA","CRISLEINE RAQUEL DOS SANTOS PEREIRA","EMILLY DE SOUZA NASCIMENTO","GABRIELA BARBARA RODRIGUES LIMA","GISLENE DA ROSA JUSTINO","ISABELLA FERNANDA DEMETRIO TEIXEIRA","JEICIELLE RAFAELE JESUS VILAÇA","LARISSA JANINE DA COSTA HENRIQUE","LAÍS MONTE MOR COSTA","LORENA ALMEIDA BRANDAO","LORENA CAROLINA DE SOUZA NEVES","LUANA FERNANDES CHELONI","LUANA LARHA DALMEIDA GALVÃO DE OLIVEIRA","MARIA CLARA MADUREIRA CUNHA","MARIA LUIZA FERREIRA DE SOUSA","MARIANA DUARTE SILVA","RAPHAELA GEOVANA ROTEA DE OLIVEIRA","THALYTA LORRANE VIDAL FERREIRA","THÁLITA BRAGA FIDELIS DOS SANTOS","VANESSA DE PAULA MARTINS","VITORIA RODRIGUES DE PAULA"]
+    },
+    {
+      nome: "FORMAÊ- 2028.2 - DIREITO UNIFICADO LUCIANA",
+      pacote: 1700.00,
+      ativos: 32,
+      excluidos: 7,
+      pago: null,
+      parcelas: "sem dados de pagamento disponíveis",
+      nomes: ["AMANDA FURTADO ENOCK","ANA LUIZA LOURENÇO DE JESUS","BÁRBARA GONTIJO REBELO BRAZ","BÁRBARA POLYANNE CARVALHO FERRAZ","EDUARDA VITORIA ZAKONI FARIA","FERNANDA BASTOS JUNQUEIRA SALLES","GABRIELLA KANANDA VIEIRA COSTA","ISABELLA MATIAS MOREIRA","JOELMA DOS REIS","KAROLINE OLIVEIRA MARQUES","LAIZA VITÓRIA DA SILVA VIEIRA","LAMARA JOYCE TAMEIRAO GOMES","LAURA SOARES DE MEDEIROS","LEANDRO CESAR NASCIMENTO FERREIRA","LETÍCIA MARTINS SILVA","LUANA SANTOS GUIMARAES ARAUJO","LUCIANA DOS SANTOS REIS","MARIA FERNANDA SILVA OLI","MARIANNA LEITE TEIXEIRA","MILLENA LANA TEIXEIRA","NATALY LEMOS VEIGA AZEVEDO","PEDRO MOREIRA RODRIGUES","RENATA DE CÁSSIA SOUZA PARREIRAS ENGRACIO","SAMARA MEDEIROS LIMA","SERGIO HENRIQUE CARVALHO DE JESUS","STEPHANE GABRIELLE LEAL SIRINEU","TAYNARA ALVES DOS SANTOS ALVARENGA","THAIS PRISCILA OLIVEIRA FONSECA","THAYS AVELAR FARIA","THAÍS BRAGA FIDELIS DOS SANTOS","VITÓRIA ALVES TORRES","YARA LUIZA PINHEIRO DOS SANTOS"]
+    }
+  ]
+};
+
+function brl(v){
+  return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+}
+
+document.getElementById('updated-date').textContent = new Date().toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'});
+
+for(let i=0;i<28;i++){document.getElementById('strip-top').innerHTML += '<span></span>';}
+for(let i=0;i<28;i++){document.getElementById('strip-bottom').innerHTML += '<span></span>';}
+
+// tabs
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// computed totals
+let totalContratado = 0, totalHub = 0, totalLiquido = 0, totalPago = 0, totalAtivos = 0;
+DATA.turmas.forEach(t=>{
+  const contratado = t.ativos * t.pacote;
+  totalContratado += contratado;
+  totalHub += contratado * 0.10;
+  totalLiquido += contratado * 0.90;
+  totalAtivos += t.ativos;
+  if(t.pago !== null) totalPago += t.pago;
+});
+
+document.getElementById('kpi-row').innerHTML = `
+  <div class="kpi"><div class="label">Turmas ativas</div><div class="value">${DATA.turmas.length}</div></div>
+  <div class="kpi"><div class="label">Formandos ativos</div><div class="value">${totalAtivos}</div></div>
+  <div class="kpi"><div class="label">Valor total contratado</div><div class="value orange">${brl(totalContratado)}</div></div>
+  <div class="kpi"><div class="label">Repasse Hub (10%)</div><div class="value">${brl(totalHub)}</div></div>
+  <div class="kpi"><div class="label">Líquido total H7 (90%)</div><div class="value">${brl(totalLiquido)}</div></div>
+`;
+
+// tab1 cards
+let html1 = '';
+DATA.turmas.forEach(t=>{
+  const contratado = t.ativos * t.pacote;
+  const hub = contratado * 0.10;
+  const h7 = contratado * 0.90;
+  const hubPct = 10;
+  html1 += `
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="turma-name">${t.nome}</div>
+    <div class="stat-pair">
+      <div>
+        <div class="big">${t.ativos}</div>
+        <div class="big-label">Formandos ativos</div>
+      </div>
+      <div class="pacote"><span>Pacote H7</span>${brl(t.pacote)}</div>
+    </div>
+    <div class="split-bar">
+      <div class="seg-h7" style="width:${100-hubPct}%"></div>
+      <div class="seg-hub" style="width:${hubPct}%"></div>
+    </div>
+    <div class="split-legend">
+      <div class="lg h7"><span class="sw"></span>H7 90% — <strong>${brl(h7)}</strong></div>
+      <div class="lg hub"><span class="sw"></span>Hub 10% — <strong>${brl(hub)}</strong></div>
+    </div>
+    <div class="contract-total">
+      <div class="label">Valor contratado</div>
+      <div class="val">${brl(contratado)}</div>
+    </div>
+  </div>`;
+});
+document.getElementById('cards-contratos').innerHTML = html1;
+
+// tab2 progress
+let html2 = '';
+DATA.turmas.forEach(t=>{
+  const contratado = t.ativos * t.pacote;
+  if(t.pago === null){
+    html2 += `
+    <div class="progress-card">
+      <div class="progress-head">
+        <div class="name">${t.nome}</div>
+      </div>
+      <div class="track"><div class="fill" style="width:0%"></div></div>
+      <div class="progress-figures">
+        <span>Contratado: <strong>${brl(contratado)}</strong></span>
+        <span>Pago: <strong>—</strong></span>
+      </div>
+      <div class="no-data-tag">Sem dados de pagamento</div>
+    </div>`;
+  } else {
+    const pct = Math.min(100, Math.round((t.pago / contratado) * 1000) / 10);
+    html2 += `
+    <div class="progress-card">
+      <div class="progress-head">
+        <div class="name">${t.nome}</div>
+        <div class="pct">${pct}%</div>
+      </div>
+      <div class="track"><div class="fill" style="width:${pct}%"></div></div>
+      <div class="progress-figures">
+        <span>Contratado: <strong>${brl(contratado)}</strong></span>
+        <span>Pago: <strong>${brl(t.pago)}</strong> · ${t.parcelas}</span>
+        <span>Pendente: <strong>${brl(contratado - t.pago)}</strong></span>
+      </div>
+    </div>`;
+  }
+});
+document.getElementById('cards-progresso').innerHTML = html2;
+
+// tab3 formandos
+let html3 = '';
+DATA.turmas.forEach(t=>{
+  const total = t.ativos + t.excluidos;
+  const names = t.nomes.map(n => `<div>${n}</div>`).join('');
+  html3 += `
+  <details class="formandos-card">
+    <summary class="formandos-summary">
+      <div class="name">${t.nome}</div>
+      <div class="counts">
+        <div class="count-block"><div class="n">${t.ativos}</div><div class="l">Ativos</div></div>
+        <div class="count-block"><div class="n excl">${t.excluidos}</div><div class="l">Excluídos</div></div>
+        <div class="count-block"><div class="n">${total}</div><div class="l">Total</div></div>
+        <div class="chev">▶</div>
+      </div>
+    </summary>
+    <div class="names-list">${names}</div>
+  </details>`;
+});
+document.getElementById('cards-formandos').innerHTML = html3;
+</script>
+
+</body>
+</html>
