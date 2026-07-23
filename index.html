@@ -468,22 +468,18 @@ const DATA = {
       nome: "FORMAÊ- 2027.1 - COMUNICAÇÃO UFMG JULIA",
       pago: 8625.00,
       parcelas: "3 de 8 parcelas pagas",
+      totalAtivos: 23,
       foraDoEscopo: ["CAROLINA DA SILVA SETE","MARIANA MOREIRA BRAZ"],
       segmentos: [
         {
           tipo: "Pacote completo",
           preco: 1150.00,
-          nomes: ["CAIO LUIZ DOMINGOS","ISABELLA RODRIGUES DO CARMO","JONAS AMARAL CARNEIRO TEIXEIRA"]
+          nomes: ["CAIO LUIZ DOMINGOS","ISABELLA RODRIGUES DO CARMO","JONAS AMARAL CARNEIRO TEIXEIRA","ALESSANDRA FARIAS LIMA","ANA PAULA MOTA LUIZ","ANTONELLA GIOVANETTI NOVAK MAIORANA","ANTÔNIO MANOEL NEVES ABREU","BRUNA SANTOS ALVIM","EDUARDA MARA DA SILVA SANTOS","FELIPE LUÍS SANTOS MOTA","JÚLIA NACIF REY","LUCCA FELIPE BOZZI","MARIA EDUARDA DIAS DA SILVA","NAYARA CRISTINE CALAZANS ROCHA","NICOLI FERNANDES ALVES DE SOUSA","OLIVIA BABETTO GONÇALVES","VITÓRIA AMARAL PRADO OLIVEIRA DE CASTRO"]
         },
         {
-          tipo: "Pacote completo + sessão extra",
-          preco: 1500.00,
-          nomes: ["ALESSANDRA FARIAS LIMA","ANA PAULA MOTA LUIZ","ANTONELLA GIOVANETTI NOVAK MAIORANA","ANTÔNIO MANOEL NEVES ABREU","BRUNA SANTOS ALVIM","EDUARDA MARA DA SILVA SANTOS","FELIPE LUÍS SANTOS MOTA","JÚLIA NACIF REY","LUCCA FELIPE BOZZI","MARIA EDUARDA DIAS DA SILVA","NAYARA CRISTINE CALAZANS ROCHA","NICOLI FERNANDES ALVES DE SOUSA","OLIVIA BABETTO GONÇALVES","VITÓRIA AMARAL PRADO OLIVEIRA DE CASTRO"]
-        },
-        {
-          tipo: "Avulso — aderente colação",
+          tipo: "Avulso — aderente",
           preco: 350.00,
-          nomes: ["ALEXIA CRISTINA DOS SANTOS SILVA","LUDMYLA BENEVENUTO OLIVEIRA","MARIA CLARA AMORIM FARIA"]
+          nomes: ["ALESSANDRA FARIAS LIMA","ANA PAULA MOTA LUIZ","ANTONELLA GIOVANETTI NOVAK MAIORANA","ANTÔNIO MANOEL NEVES ABREU","BRUNA SANTOS ALVIM","EDUARDA MARA DA SILVA SANTOS","FELIPE LUÍS SANTOS MOTA","JÚLIA NACIF REY","LUCCA FELIPE BOZZI","MARIA EDUARDA DIAS DA SILVA","NAYARA CRISTINE CALAZANS ROCHA","NICOLI FERNANDES ALVES DE SOUSA","OLIVIA BABETTO GONÇALVES","VITÓRIA AMARAL PRADO OLIVEIRA DE CASTRO","ALEXIA CRISTINA DOS SANTOS SILVA","LUDMYLA BENEVENUTO OLIVEIRA","MARIA CLARA AMORIM FARIA"]
         },
         {
           tipo: "Avulso — não aderente",
@@ -496,6 +492,7 @@ const DATA = {
       nome: "FORMAÊ- 2028.2 - ENFERMAGEM CIÊNCIAS MÉDICAS ISABELLA",
       pago: 8482.50,
       parcelas: "3 de 16 parcelas pagas",
+      totalAtivos: 26,
       foraDoEscopo: [],
       segmentos: [
         {
@@ -509,6 +506,7 @@ const DATA = {
       nome: "FORMAÊ- 2028.2 - DIREITO UNIFICADO LUCIANA",
       pago: null,
       parcelas: "sem dados de pagamento disponíveis",
+      totalAtivos: 32,
       foraDoEscopo: [],
       excluidosInadimplencia: 7,
       segmentos: [
@@ -523,7 +521,7 @@ const DATA = {
 };
 
 // helper: total ativos and valor contratado per turma
-function turmaAtivos(t){ return t.segmentos.reduce((s,g)=>s+g.nomes.length,0); }
+function turmaAtivos(t){ return t.totalAtivos; }
 function turmaContratado(t){ return t.segmentos.reduce((s,g)=>s+g.nomes.length*g.preco,0); }
 
 function brl(v){
