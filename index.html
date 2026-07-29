@@ -517,17 +517,26 @@ const DATA = {
   turmas: [
     {
       nome: "FORMAÊ- 2027.1 - COMUNICAÇÃO UFMG JULIA",
-      pago: 8625.00,
-      parcelas: "3 de 8 parcelas pagas",
-      cronograma: [
-        {parc:"001/008", venc:"20/08/2025", status:"QUITADO", baixa:"20/08/2025", valor:2875.00},
-        {parc:"002/008", venc:"12/12/2025", status:"QUITADO", baixa:"12/12/2025", valor:2875.00},
-        {parc:"003/008", venc:"20/02/2026", status:"QUITADO", baixa:"20/02/2026", valor:2875.00},
-        {parc:"004/008", venc:"20/05/2026", status:"PENDENTE", baixa:null, valor:2875.00},
-        {parc:"005/008", venc:"19/08/2026", status:"PENDENTE", baixa:null, valor:2875.00},
-        {parc:"006/008", venc:"20/11/2026", status:"PENDENTE", baixa:null, valor:2875.00},
-        {parc:"007/008", venc:"19/02/2027", status:"PENDENTE", baixa:null, valor:2875.00},
-        {parc:"008/008", venc:"19/04/2027", status:"PENDENTE", baixa:null, valor:2875.00}
+      ops: [
+        {
+          nome: "OP FOTOGRAFIA — Pacote completo",
+          contratado: 19550.00,
+          pago: 8625.00,
+          nota: "Programada originalmente em R$ 23.000,00 (base 20 aderentes). Corrigida para 17 aderentes reais. As parcelas 4 a 8 precisam ser retificadas para refletir o novo saldo.",
+          cronograma: [
+            {parc:"001/008", venc:"20/08/2025", status:"QUITADO", baixa:"20/08/2025", valor:2875.00},
+            {parc:"002/008", venc:"12/12/2025", status:"QUITADO", baixa:"12/12/2025", valor:2875.00},
+            {parc:"003/008", venc:"20/02/2026", status:"QUITADO", baixa:"20/02/2026", valor:2875.00},
+            {parc:"004 a 008", venc:"a retificar", status:"A RETIFICAR", baixa:null, valor:10925.00}
+          ]
+        },
+        {
+          nome: "OP SESSÃO DE MEIO CURSO — Avulsos",
+          contratado: 7450.00,
+          pago: 0,
+          nota: "OP ainda não emitida. Refere-se a 17 sessões avulso aderente (R$350) + 3 avulso não aderente (R$500).",
+          cronograma: []
+        }
       ],
       totalAtivos: 23,
       foraDoEscopo: ["CAROLINA DA SILVA SETE","MARIANA MOREIRA BRAZ"],
@@ -551,25 +560,31 @@ const DATA = {
     },
     {
       nome: "FORMAÊ- 2028.2 - ENFERMAGEM CIÊNCIAS MÉDICAS ISABELLA",
-      pago: 8482.50,
-      parcelas: "3 de 16 parcelas pagas",
-      cronograma: [
-        {parc:"001/016", venc:"20/10/2025", status:"QUITADO", baixa:"10/10/2025", valor:2827.50},
-        {parc:"002/016", venc:"19/01/2026", status:"QUITADO", baixa:"19/01/2026", valor:2827.50},
-        {parc:"003/016", venc:"27/04/2026", status:"QUITADO", baixa:"27/04/2026", valor:2827.50},
-        {parc:"004/016", venc:"20/07/2026", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"005/016", venc:"19/10/2026", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"006/016", venc:"20/01/2027", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"007/016", venc:"19/04/2027", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"008/016", venc:"19/07/2027", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"009/016", venc:"20/10/2027", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"010/016", venc:"19/01/2028", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"011/016", venc:"19/04/2028", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"012/016", venc:"19/07/2028", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"013/016", venc:"20/10/2028", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"014/016", venc:"19/01/2029", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"015/016", venc:"20/04/2029", status:"PENDENTE", baixa:null, valor:2827.50},
-        {parc:"016/016", venc:"20/07/2029", status:"PENDENTE", baixa:null, valor:2827.50}
+      ops: [
+        {
+          nome: "OP FOTOGRAFIA — Pacote completo",
+          contratado: 45240.00,
+          pago: 8482.50,
+          nota: null,
+          cronograma: [
+            {parc:"001/016", venc:"20/10/2025", status:"QUITADO", baixa:"10/10/2025", valor:2827.50},
+            {parc:"002/016", venc:"19/01/2026", status:"QUITADO", baixa:"19/01/2026", valor:2827.50},
+            {parc:"003/016", venc:"27/04/2026", status:"QUITADO", baixa:"27/04/2026", valor:2827.50},
+            {parc:"004/016", venc:"20/07/2026", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"005/016", venc:"19/10/2026", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"006/016", venc:"20/01/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"007/016", venc:"19/04/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"008/016", venc:"19/07/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"009/016", venc:"20/10/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"010/016", venc:"19/01/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"011/016", venc:"19/04/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"012/016", venc:"19/07/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"013/016", venc:"20/10/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"014/016", venc:"19/01/2029", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"015/016", venc:"20/04/2029", status:"PENDENTE", baixa:null, valor:2827.50},
+            {parc:"016/016", venc:"20/07/2029", status:"PENDENTE", baixa:null, valor:2827.50}
+          ]
+        }
       ],
       totalAtivos: 26,
       foraDoEscopo: [],
@@ -583,8 +598,15 @@ const DATA = {
     },
     {
       nome: "FORMAÊ- 2028.2 - DIREITO UNIFICADO LUCIANA",
-      pago: null,
-      parcelas: "sem dados de pagamento disponíveis",
+      ops: [
+        {
+          nome: "OP FOTOGRAFIA — Pacote completo",
+          contratado: 54400.00,
+          pago: null,
+          nota: null,
+          cronograma: []
+        }
+      ],
       totalAtivos: 32,
       foraDoEscopo: [],
       excluidosInadimplencia: 7,
@@ -630,7 +652,7 @@ DATA.turmas.forEach(t=>{
   totalHub += contratado * 0.10;
   totalLiquido += contratado * 0.90;
   totalAtivos += turmaAtivos(t);
-  if(t.pago !== null) totalPago += t.pago;
+  t.ops.forEach(op => { if(op.pago !== null) totalPago += op.pago; });
 });
 
 document.getElementById('kpi-row').innerHTML = `
@@ -680,58 +702,63 @@ DATA.turmas.forEach(t=>{
 });
 document.getElementById('cards-contratos').innerHTML = html1;
 
-// tab2 progress
+// tab2 progress — agora por OP dentro de cada turma
 let html2 = '';
 DATA.turmas.forEach(t=>{
-  const contratado = turmaContratado(t);
-  const schedHtml = t.cronograma ? `
-    <details class="sched-toggle">
-      <summary>Ver cronograma de pagamentos (${t.cronograma.length} parcelas)</summary>
-      <table class="sched-table">
-        <thead><tr><th>Parcela</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Data pgto.</th></tr></thead>
-        <tbody>
-          ${t.cronograma.map(c => `
-            <tr class="${c.status==='PENDENTE' ? 'pendente' : ''}">
-              <td>${c.parc}</td>
-              <td>${c.venc}</td>
-              <td>${brl(c.valor)}</td>
-              <td><span class="status-chip ${c.status==='PENDENTE' ? 'pendente' : 'quitado'}">${c.status}</span></td>
-              <td>${c.baixa || '—'}</td>
-            </tr>`).join('')}
-        </tbody>
-      </table>
-    </details>` : '';
+  html2 += `<h3 style="font-family:var(--font-display); font-size:0.82rem; font-weight:600; color:var(--off-white); margin:1.6rem 0 0.8rem;">${t.nome}</h3>`;
 
-  if(t.pago === null){
-    html2 += `
-    <div class="progress-card">
-      <div class="progress-head">
-        <div class="name">${t.nome}</div>
-      </div>
-      <div class="track"><div class="fill" style="width:0%"></div></div>
-      <div class="progress-figures">
-        <span>Contratado: <strong>${brl(contratado)}</strong></span>
-        <span>Pago: <strong>—</strong></span>
-      </div>
-      <div class="no-data-tag">Sem dados de pagamento</div>
-    </div>`;
-  } else {
-    const pct = Math.min(100, Math.round((t.pago / contratado) * 1000) / 10);
-    html2 += `
-    <div class="progress-card">
-      <div class="progress-head">
-        <div class="name">${t.nome}</div>
-        <div class="pct">${pct}%</div>
-      </div>
-      <div class="track"><div class="fill" style="width:${pct}%"></div></div>
-      <div class="progress-figures">
-        <span>Contratado: <strong>${brl(contratado)}</strong></span>
-        <span>Pago: <strong>${brl(t.pago)}</strong> · ${t.parcelas}</span>
-        <span>Pendente: <strong>${brl(contratado - t.pago)}</strong></span>
-      </div>
-      ${schedHtml}
-    </div>`;
-  }
+  t.ops.forEach(op=>{
+    const schedHtml = (op.cronograma && op.cronograma.length) ? `
+      <details class="sched-toggle">
+        <summary>Ver cronograma de pagamentos (${op.cronograma.length} ${op.cronograma.length===1?'item':'itens'})</summary>
+        <table class="sched-table">
+          <thead><tr><th>Parcela</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Data pgto.</th></tr></thead>
+          <tbody>
+            ${op.cronograma.map(c => `
+              <tr class="${c.status!=='QUITADO' ? 'pendente' : ''}">
+                <td>${c.parc}</td>
+                <td>${c.venc}</td>
+                <td>${brl(c.valor)}</td>
+                <td><span class="status-chip ${c.status!=='QUITADO' ? 'pendente' : 'quitado'}">${c.status}</span></td>
+                <td>${c.baixa || '—'}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </details>` : '';
+
+    const notaHtml = op.nota ? `<div class="no-data-tag" style="color:var(--slate); border-color:var(--line-strong); margin-top:0.7rem; white-space:normal; text-transform:none; letter-spacing:0.01em; padding:6px 10px;">${op.nota}</div>` : '';
+
+    if(op.pago === null){
+      html2 += `
+      <div class="progress-card">
+        <div class="progress-head"><div class="name">${op.nome}</div></div>
+        <div class="track"><div class="fill" style="width:0%"></div></div>
+        <div class="progress-figures">
+          <span>Contratado: <strong>${brl(op.contratado)}</strong></span>
+          <span>Pago: <strong>—</strong></span>
+        </div>
+        <div class="no-data-tag">Sem dados de pagamento</div>
+        ${notaHtml}
+      </div>`;
+    } else {
+      const pct = op.contratado > 0 ? Math.min(100, Math.round((op.pago / op.contratado) * 1000) / 10) : 0;
+      html2 += `
+      <div class="progress-card">
+        <div class="progress-head">
+          <div class="name">${op.nome}</div>
+          <div class="pct">${pct}%</div>
+        </div>
+        <div class="track"><div class="fill" style="width:${pct}%"></div></div>
+        <div class="progress-figures">
+          <span>Contratado: <strong>${brl(op.contratado)}</strong></span>
+          <span>Pago: <strong>${brl(op.pago)}</strong></span>
+          <span>Pendente: <strong>${brl(op.contratado - op.pago)}</strong></span>
+        </div>
+        ${notaHtml}
+        ${schedHtml}
+      </div>`;
+    }
+  });
 });
 document.getElementById('cards-progresso').innerHTML = html2;
 
