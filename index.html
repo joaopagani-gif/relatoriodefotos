@@ -389,6 +389,42 @@
   .status-chip.quitado{color:var(--good); border-color:var(--good);}
   .status-chip.pendente{color:var(--slate); border-color:var(--slate);}
 
+  .retif-wrap{position:relative; display:inline-flex; align-items:center; gap:6px;}
+  .retif-flag{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:16px; height:16px;
+    border-radius:50%;
+    background:var(--warn);
+    color:var(--navy);
+    font-family:var(--font-display);
+    font-size:0.62rem;
+    font-weight:800;
+    cursor:pointer;
+    flex-shrink:0;
+    border:none;
+  }
+  .retif-tooltip{
+    display:none;
+    position:absolute;
+    left:0;
+    top:135%;
+    z-index:20;
+    background:var(--paper);
+    color:var(--navy);
+    font-family:var(--font-display);
+    font-size:0.72rem;
+    line-height:1.5;
+    padding:0.7rem 0.85rem;
+    width:220px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35);
+    border-left:3px solid var(--warn);
+  }
+  .retif-tooltip.show{display:block;}
+  .retif-tooltip .old{color:#8a6d1f; text-decoration:line-through; display:block;}
+  .retif-tooltip .new{color:var(--orange-dark); font-weight:700; display:block; margin-top:2px;}
+
   /* formandos ativos view */
   .formandos-card{
     background:var(--navy-2);
@@ -505,7 +541,8 @@
 
   <div class="footnote">
     Formandos com inadimplência acima de 70% são desconsiderados da contagem de ativos.<br>
-    A remuneração da Hub corresponde a 10% do valor contratado; o valor líquido repassado à H7 é de 90%.
+    A remuneração da Hub corresponde a 10% do valor contratado; o valor líquido repassado à H7 é de 90%.<br>
+    Beneficiário: H7 Produtora Ltda — CNPJ 47.797.472/0001-80
   </div>
 
 </main>
@@ -524,10 +561,14 @@ const DATA = {
           pago: 8625.00,
           nota: "Programada originalmente em R$ 23.000,00 (base 20 aderentes). Corrigida para 17 aderentes reais. As parcelas 4 a 8 precisam ser retificadas para refletir o novo saldo.",
           cronograma: [
-            {parc:"001/008", venc:"20/08/2025", status:"QUITADO", baixa:"20/08/2025", valor:2875.00},
-            {parc:"002/008", venc:"12/12/2025", status:"QUITADO", baixa:"12/12/2025", valor:2875.00},
-            {parc:"003/008", venc:"20/02/2026", status:"QUITADO", baixa:"20/02/2026", valor:2875.00},
-            {parc:"004 a 008", venc:"a retificar", status:"A RETIFICAR", baixa:null, valor:10925.00}
+            {parc:"001/008", venc:"20/08/2025", status:"QUITADO", baixa:"20/08/2025", valor:2875.00, retificarPara:null},
+            {parc:"002/008", venc:"12/12/2025", status:"QUITADO", baixa:"12/12/2025", valor:2875.00, retificarPara:null},
+            {parc:"003/008", venc:"20/02/2026", status:"QUITADO", baixa:"20/02/2026", valor:2875.00, retificarPara:null},
+            {parc:"004/008", venc:"20/05/2026", status:"PENDENTE", baixa:null, valor:2875.00, retificarPara:2185.00},
+            {parc:"005/008", venc:"19/08/2026", status:"PENDENTE", baixa:null, valor:2875.00, retificarPara:2185.00},
+            {parc:"006/008", venc:"20/11/2026", status:"PENDENTE", baixa:null, valor:2875.00, retificarPara:2185.00},
+            {parc:"007/008", venc:"19/02/2027", status:"PENDENTE", baixa:null, valor:2875.00, retificarPara:2185.00},
+            {parc:"008/008", venc:"19/04/2027", status:"PENDENTE", baixa:null, valor:2875.00, retificarPara:2185.00}
           ]
         },
         {
@@ -629,6 +670,18 @@ function brl(v){
   return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
 }
 
+function toggleRetif(btn){
+  const tip = btn.nextElementSibling;
+  const wasOpen = tip.classList.contains('show');
+  document.querySelectorAll('.retif-tooltip.show').forEach(t=>t.classList.remove('show'));
+  if(!wasOpen) tip.classList.add('show');
+}
+document.addEventListener('click', (e)=>{
+  if(!e.target.classList.contains('retif-flag')){
+    document.querySelectorAll('.retif-tooltip.show').forEach(t=>t.classList.remove('show'));
+  }
+});
+
 document.getElementById('updated-date').textContent = new Date().toLocaleDateString('pt-BR', {day:'2-digit', month:'long', year:'numeric'});
 
 for(let i=0;i<28;i++){document.getElementById('strip-top').innerHTML += '<span></span>';}
@@ -714,11 +767,21 @@ DATA.turmas.forEach(t=>{
         <table class="sched-table">
           <thead><tr><th>Parcela</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Data pgto.</th></tr></thead>
           <tbody>
-            ${op.cronograma.map(c => `
+            ${op.cronograma.map((c,idx) => `
               <tr class="${c.status!=='QUITADO' ? 'pendente' : ''}">
                 <td>${c.parc}</td>
                 <td>${c.venc}</td>
-                <td>${brl(c.valor)}</td>
+                <td>
+                  <span class="retif-wrap">
+                    ${brl(c.valor)}
+                    ${c.retificarPara ? `
+                      <button type="button" class="retif-flag" onclick="toggleRetif(this)">!</button>
+                      <div class="retif-tooltip">
+                        <span class="old">Programado: ${brl(c.valor)}</span>
+                        <span class="new">Retificar para: ${brl(c.retificarPara)}</span>
+                      </div>` : ''}
+                  </span>
+                </td>
                 <td><span class="status-chip ${c.status!=='QUITADO' ? 'pendente' : 'quitado'}">${c.status}</span></td>
                 <td>${c.baixa || '—'}</td>
               </tr>`).join('')}
