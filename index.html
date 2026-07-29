@@ -338,6 +338,57 @@
     margin-top:0.6rem;
   }
 
+  .sched-toggle{
+    margin-top:1rem;
+  }
+  .sched-toggle summary{
+    cursor:pointer;
+    list-style:none;
+    font-family:var(--font-display);
+    font-size:0.68rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--orange);
+    padding-top:0.8rem;
+    border-top:1px solid var(--line);
+  }
+  .sched-toggle summary::-webkit-details-marker{display:none;}
+  .sched-toggle summary::before{content:"▶ "; font-size:0.6rem;}
+  .sched-toggle[open] summary::before{content:"▼ ";}
+  .sched-table{
+    margin-top:0.8rem;
+    width:100%;
+    border-collapse:collapse;
+  }
+  .sched-table th{
+    font-family:var(--font-display);
+    font-size:0.6rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--slate);
+    text-align:left;
+    padding:6px 8px;
+    border-bottom:1px solid var(--line-strong);
+  }
+  .sched-table td{
+    font-family:var(--font-display);
+    font-size:0.78rem;
+    color:var(--off-white);
+    padding:6px 8px;
+    border-bottom:1px solid var(--line);
+  }
+  .sched-table tr.pendente td{color:var(--slate);}
+  .status-chip{
+    display:inline-block;
+    font-size:0.6rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:2px 7px;
+    border:1px solid;
+  }
+  .status-chip.quitado{color:var(--good); border-color:var(--good);}
+  .status-chip.pendente{color:var(--slate); border-color:var(--slate);}
+
   /* formandos ativos view */
   .formandos-card{
     background:var(--navy-2);
@@ -468,6 +519,16 @@ const DATA = {
       nome: "FORMAÊ- 2027.1 - COMUNICAÇÃO UFMG JULIA",
       pago: 8625.00,
       parcelas: "3 de 8 parcelas pagas",
+      cronograma: [
+        {parc:"001/008", venc:"20/08/2025", status:"QUITADO", baixa:"20/08/2025", valor:2875.00},
+        {parc:"002/008", venc:"12/12/2025", status:"QUITADO", baixa:"12/12/2025", valor:2875.00},
+        {parc:"003/008", venc:"20/02/2026", status:"QUITADO", baixa:"20/02/2026", valor:2875.00},
+        {parc:"004/008", venc:"20/05/2026", status:"PENDENTE", baixa:null, valor:2875.00},
+        {parc:"005/008", venc:"19/08/2026", status:"PENDENTE", baixa:null, valor:2875.00},
+        {parc:"006/008", venc:"20/11/2026", status:"PENDENTE", baixa:null, valor:2875.00},
+        {parc:"007/008", venc:"19/02/2027", status:"PENDENTE", baixa:null, valor:2875.00},
+        {parc:"008/008", venc:"19/04/2027", status:"PENDENTE", baixa:null, valor:2875.00}
+      ],
       totalAtivos: 23,
       foraDoEscopo: ["CAROLINA DA SILVA SETE","MARIANA MOREIRA BRAZ"],
       segmentos: [
@@ -492,6 +553,24 @@ const DATA = {
       nome: "FORMAÊ- 2028.2 - ENFERMAGEM CIÊNCIAS MÉDICAS ISABELLA",
       pago: 8482.50,
       parcelas: "3 de 16 parcelas pagas",
+      cronograma: [
+        {parc:"001/016", venc:"20/10/2025", status:"QUITADO", baixa:"10/10/2025", valor:2827.50},
+        {parc:"002/016", venc:"19/01/2026", status:"QUITADO", baixa:"19/01/2026", valor:2827.50},
+        {parc:"003/016", venc:"27/04/2026", status:"QUITADO", baixa:"27/04/2026", valor:2827.50},
+        {parc:"004/016", venc:"20/07/2026", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"005/016", venc:"19/10/2026", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"006/016", venc:"20/01/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"007/016", venc:"19/04/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"008/016", venc:"19/07/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"009/016", venc:"20/10/2027", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"010/016", venc:"19/01/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"011/016", venc:"19/04/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"012/016", venc:"19/07/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"013/016", venc:"20/10/2028", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"014/016", venc:"19/01/2029", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"015/016", venc:"20/04/2029", status:"PENDENTE", baixa:null, valor:2827.50},
+        {parc:"016/016", venc:"20/07/2029", status:"PENDENTE", baixa:null, valor:2827.50}
+      ],
       totalAtivos: 26,
       foraDoEscopo: [],
       segmentos: [
@@ -605,6 +684,24 @@ document.getElementById('cards-contratos').innerHTML = html1;
 let html2 = '';
 DATA.turmas.forEach(t=>{
   const contratado = turmaContratado(t);
+  const schedHtml = t.cronograma ? `
+    <details class="sched-toggle">
+      <summary>Ver cronograma de pagamentos (${t.cronograma.length} parcelas)</summary>
+      <table class="sched-table">
+        <thead><tr><th>Parcela</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Data pgto.</th></tr></thead>
+        <tbody>
+          ${t.cronograma.map(c => `
+            <tr class="${c.status==='PENDENTE' ? 'pendente' : ''}">
+              <td>${c.parc}</td>
+              <td>${c.venc}</td>
+              <td>${brl(c.valor)}</td>
+              <td><span class="status-chip ${c.status==='PENDENTE' ? 'pendente' : 'quitado'}">${c.status}</span></td>
+              <td>${c.baixa || '—'}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </details>` : '';
+
   if(t.pago === null){
     html2 += `
     <div class="progress-card">
@@ -632,6 +729,7 @@ DATA.turmas.forEach(t=>{
         <span>Pago: <strong>${brl(t.pago)}</strong> · ${t.parcelas}</span>
         <span>Pendente: <strong>${brl(contratado - t.pago)}</strong></span>
       </div>
+      ${schedHtml}
     </div>`;
   }
 });
